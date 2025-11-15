@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Результаты: {{ query }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <header class="header-search">
+        <form action="{{ url_for('search') }}" method="GET" class="search-box">
+            <a href="{{ url_for('gemini_page') }}" class="gemini-button">✨ 2.5 Flash</a>
+            <input type="text" name="q" class="search-input" value="{{ query }}">
+            <button type="submit" class="search-button">&#128269;</button>
+        </form>
+    </header>
+
+    <nav class="tabs">
+        <div class="tab-link active" data-tab="search">Поиск</div>
+        <div class="tab-link" data-tab="ai">ИИ</div>
+        <div class="tab-link" data-tab="site">Официальный сайт</div>
+    </nav>
+
+    <main class="results-container">
+        
+        <div id="search" class="tab-content active">
+            <div class="search-results-box">
+                {{ search_results }}
+            </div>
+        </div>
+
+        <div id="ai" class="tab-content">
+            {% if ai_card_data %}
+                <div class="ai-response-box">
+                    <h2 style="color: #8A74FF; margin-top: 0;">Сводка ИИ</h2>
+                    <p>{{ ai_card_data.summary }}</p>
+
+                    <h3 style="color: #eee;">Ключевые факты:</h3>
+                    <ul>
+                    {% for fact in ai_card_data.facts %}
+                        <li>{{ fact }}</li>
+                    {% endfor %}
+                    </ul>
+
+                    <p style="font-size: 0.9em; opacity: 0.7;">
+                        **Уверенность ИИ**: {{ ai_card_data.source_confidence }}
+                    </p>
+                </div>
+            {% else %}
+                <div class="ai-response-box" style="color: #ff8a8a;">
+                    {{ ai_response_json }}
+                </div>
+            {% endif %}
+        </div>
+
+        <div id="site" class="tab-content">
+            <div class="official-site-box">
+                {% if official_site and official_site != "Не найден" %}
+                    <a href="https://{{ official_site }}" target="_blank" style="color: #8A74FF; text-decoration: none;">
+                        {{ official_site }}
+                    </a>
+                {% else %}
+                    <p>Официальный сайт не найден.</p>
+                {% endif %}
+            </div>
+        </div>
+    </main>
+
+    <div id="smoke-trail"></div>
+    <div id="admin-message-popup"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <script src="{{ url_for('static', filename='main.js') }}"></script>
+</body>
+</html>

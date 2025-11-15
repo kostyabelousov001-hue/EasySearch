@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Поиск</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <div class="search-container">
+        
+        <h1 class="main-title">Найдем все!</h1>
+
+        <form action="{{ url_for('search') }}" method="GET" class="search-box">
+            
+            <a href="{{ url_for('gemini_page') }}" class="gemini-button" title="Чат с ИИ">
+                ✨ 2.5 Flash
+            </a>
+
+            <input type="text" name="q" class="search-input" placeholder="Что можно найти?" required>
+            
+            <button type="submit" class="search-button" title="Поиск">
+                &#128269; 
+            </button>
+        </form>
+    </div>
+
+    <div id="smoke-trail"></div>
+    <div id="admin-message-popup"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <script src="{{ url_for('static', filename='main.js') }}"></script>
+</body>
+</html>

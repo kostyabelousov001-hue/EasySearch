@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Чат с Gemini 2.5 Flash</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <a href="/" class="chat-link-back">
+        <-- На главную (Поиск)
+    </a>
+
+    <div class="chat-container">
+        <div id="chat-history">
+            <div class="message ai-message">
+                <strong>Gemini:</strong>
+                Здравствуйте! Я — Gemini 2.5 Flash. Спрашивайте, что угодно!
+            </div>
+        </div>
+        <form id="chat-form" class="chat-input-area">
+            <input type="text" id="chat-input" placeholder="Введите ваше сообщение..." required>
+            <button type="submit">Отправить</button>
+        </form>
+    </div>
+    
+    <div id="smoke-trail"></div>
+    <div id="admin-message-popup"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <script src="{{ url_for('static', filename='main.js') }}"></script>
+</body>
+</html>
